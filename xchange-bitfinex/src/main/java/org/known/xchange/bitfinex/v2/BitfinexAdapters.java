@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
 
 public class BitfinexAdapters {
 
 
-  public static Ticker adaptTicker(BitfinexTicker bitfinexTicker, CurrencyPair currencyPair) {
+  public static Ticker adaptTicker(BitfinexSingleTicker bitfinexTicker, CurrencyPair currencyPair) {
 
     BigDecimal last = bitfinexTicker.getLastPrice();
     BigDecimal bid = bitfinexTicker.getBid();

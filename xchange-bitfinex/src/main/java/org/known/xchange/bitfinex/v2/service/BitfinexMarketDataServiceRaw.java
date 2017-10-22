@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.knowm.xchange.Exchange;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
 
 /**
@@ -18,9 +19,14 @@ public class BitfinexMarketDataServiceRaw extends BitfinexBaseService {
     super(exchange);
   }
 
-  public List<BitfinexTicker> getTickersRaw(List<String> currencyPairs) throws IOException {
+  public List<BitfinexTicker> getTickersRaw(List<String> symbols) throws IOException {
 
-    return bitfinex.getTickers(currencyPairs);
+    return bitfinex.getTickers(symbols);
   }
 
+
+  public BitfinexSingleTicker getTickerRaw(String symbol) throws IOException {
+
+    return bitfinex.getTicker(symbol);
+  }
 }
