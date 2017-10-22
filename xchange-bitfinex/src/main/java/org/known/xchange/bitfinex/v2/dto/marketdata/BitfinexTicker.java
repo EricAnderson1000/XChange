@@ -55,7 +55,7 @@ public class BitfinexTicker {
   private BigDecimal lastPrice;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private Integer volume;
+  private BigDecimal volume;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private BigDecimal high;
@@ -95,7 +95,7 @@ public class BitfinexTicker {
     return lastPrice;
   }
 
-  public Integer getVolume() {
+  public BigDecimal getVolume() {
     return volume;
   }
 

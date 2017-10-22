@@ -18,7 +18,7 @@ public class BitfinexMarketDataServiceRaw extends BitfinexBaseService {
     super(exchange);
   }
 
-  public List<BitfinexTicker> getTickers(List<String> currencyPairs) throws IOException {
+  public List<BitfinexTicker> getTickersRaw(List<String> currencyPairs) throws IOException {
 
     return bitfinex.getTickers(currencyPairs);
   }
