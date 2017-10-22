@@ -3,6 +3,7 @@ package org.known.xchange.bitfinex.v2.service;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -15,6 +16,7 @@ import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.service.marketdata.MarketDataService;
 import org.known.xchange.bitfinex.v2.Bitfinex;
 import org.known.xchange.bitfinex.v2.BitfinexAdapters;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
 
@@ -46,11 +48,12 @@ public class BitfinexMarketDataService extends BitfinexMarketDataServiceRaw impl
   @Override
   public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args) throws ExchangeException, NotAvailableFromExchangeException, NotYetImplementedForExchangeException, IOException {
 
+    String precision = (args == null || args.length == 0) ?
+        null : (String) args[0];
 
+    List<BitfinexBook> books = getBooksRaw(BitfinexAdapters.adaptCurrencyPair(currencyPair), Optional.ofNullable(precision));
 
-
-
-    return null;
+    return BitfinexAdapters.adaptOrderBooks(books, currencyPair);
   }
 
   @Override

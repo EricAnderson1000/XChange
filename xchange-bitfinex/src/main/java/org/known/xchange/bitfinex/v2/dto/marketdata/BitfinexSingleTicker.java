@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 @JsonPropertyOrder({"bid", "bidSize", "ask", "askSize", "dailyChange", "dailyChangePerc", "lastPrice", "volume", "high", "low" })
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class BitfinexSingleTicker {
 
   /**

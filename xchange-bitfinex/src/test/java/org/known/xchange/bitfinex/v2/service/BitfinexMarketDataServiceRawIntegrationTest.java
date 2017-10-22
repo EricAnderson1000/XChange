@@ -5,11 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.known.xchange.bitfinex.v2.BitfinexExchange;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
 
@@ -34,6 +36,15 @@ public class BitfinexMarketDataServiceRawIntegrationTest {
 
     assertThat(ticker).isNotNull();
     assertThat(ticker.getAsk()).isGreaterThan(new BigDecimal(100));
+  }
+
+  @Test
+  public void testGetBooksRaw() throws Exception {
+
+    List<BitfinexBook> books = marketDataServiceRaw.getBooksRaw("tBTCUSD", Optional.empty());
+
+    assertThat(books).isNotNull();
+    assertThat(books.size()).isGreaterThan(1);
   }
 
 }
