@@ -19,6 +19,7 @@ import org.known.xchange.bitfinex.v2.BitfinexAdapters;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
 
 import com.google.gdata.util.common.base.Preconditions;
 
@@ -58,6 +59,8 @@ public class BitfinexMarketDataService extends BitfinexMarketDataServiceRaw impl
 
   @Override
   public Trades getTrades(CurrencyPair currencyPair, Object... args) throws ExchangeException, NotAvailableFromExchangeException, NotYetImplementedForExchangeException, IOException {
-    return null;
+
+    List<BitfinexTrade> trades = getTradesRaw(BitfinexAdapters.adaptCurrencyPair(currencyPair));
+    return BitfinexAdapters.adaptTrades(trades, currencyPair);
   }
 }

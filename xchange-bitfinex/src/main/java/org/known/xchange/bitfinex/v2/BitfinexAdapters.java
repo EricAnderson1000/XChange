@@ -1,23 +1,24 @@
 package org.known.xchange.bitfinex.v2;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Ticker;
+import org.knowm.xchange.dto.marketdata.Trade;
+import org.knowm.xchange.dto.marketdata.Trades;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
-
-import com.sun.tools.corba.se.idl.constExpr.Or;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
 
 public class BitfinexAdapters {
-
 
   public static Ticker adaptTicker(BitfinexSingleTicker bitfinexTicker, CurrencyPair currencyPair) {
 
@@ -46,13 +47,9 @@ public class BitfinexAdapters {
 
   public static LimitOrder adaptBook(BitfinexBook bitfinexBook, CurrencyPair currencyPair, Date timestamp) {
 
-    Order.OrderType orderType = (bitfinexBook.getAmount().compareTo(BigDecimal.ZERO)) > 0 ?
-        Order.OrderType.BID :
-        Order.OrderType.ASK;
-
+    Order.OrderType orderType = getOrderTypeFromAmount(bitfinexBook.getAmount());
     return new LimitOrder(orderType, bitfinexBook.getAmount(), currencyPair, "", timestamp, bitfinexBook.getPrice());
   }
-
 
   public static OrderBook adaptOrderBooks(List<BitfinexBook> books, CurrencyPair currencyPair) {
 
@@ -65,13 +62,39 @@ public class BitfinexAdapters {
 
       if (limitOrder.getType() == Order.OrderType.BID) {
         bids.add(limitOrder);
-      }
-      else {
+      } else {
         asks.add(limitOrder);
       }
     }
 
     return new OrderBook(artificialTimestamp, asks, bids);
+  }
+
+  public static Trades adaptTrades(List<BitfinexTrade> trades, CurrencyPair currencyPair) {
+
+    List<Trade> convertedTrades = trades.stream()
+        .map( bitfinexTrade -> adaptTrade(bitfinexTrade, currencyPair))
+        .collect(Collectors.toList());
+
+    return new Trades(convertedTrades, Trades.TradeSortType.SortByTimestamp);
+  }
+
+  public static Trade adaptTrade(BitfinexTrade trade, CurrencyPair currencyPair) {
+
+    return new Trade.Builder()
+        .type(getOrderTypeFromAmount(trade.getAmount()))
+        .currencyPair(currencyPair)
+        .id(trade.getId())
+        .originalAmount(trade.getAmount().abs())
+        .price(trade.getPrice())
+        .timestamp(new Date(trade.getMts()))
+        .build();
+  }
+
+  public static Order.OrderType getOrderTypeFromAmount(BigDecimal amount) {
+    return (amount.compareTo(BigDecimal.ZERO)) > 0 ?
+        Order.OrderType.BID :
+        Order.OrderType.ASK;
   }
 
 }

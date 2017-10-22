@@ -3,12 +3,10 @@ package org.known.xchange.bitfinex.v2.dto.marketdata;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 @JsonPropertyOrder({ "symbol", "bid", "bidSize", "ask", "askSize", "dailyChange", "dailyChangePerc", "lastPrice", "volume", "high", "low" })
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class BitfinexTicker {
 
   /**

@@ -9,6 +9,7 @@ import org.knowm.xchange.Exchange;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
 
 /**
  * Provides RAW access to the public APIs.
@@ -36,5 +37,10 @@ public class BitfinexMarketDataServiceRaw extends BitfinexBaseService {
   public List<BitfinexBook> getBooksRaw(String symbol, Optional<String> precision) throws IOException {
 
     return bitfinex.getBooks(symbol, precision.orElse("P0"));
+  }
+
+  public List<BitfinexTrade> getTradesRaw(String symbol) throws IOException {
+
+     return bitfinex.getTrades(symbol);
   }
 }

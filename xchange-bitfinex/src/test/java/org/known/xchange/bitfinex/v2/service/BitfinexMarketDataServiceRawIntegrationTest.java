@@ -2,6 +2,7 @@ package org.known.xchange.bitfinex.v2.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -14,37 +15,51 @@ import org.known.xchange.bitfinex.v2.BitfinexExchange;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
 
 public class BitfinexMarketDataServiceRawIntegrationTest {
 
   private Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BitfinexExchange.class.getName());
+
   private BitfinexMarketDataServiceRaw marketDataServiceRaw = (BitfinexMarketDataServiceRaw) exchange.getMarketDataService();
 
-  @Test
-  public void testGetTickersRaw() throws Exception {
+  private static final String BTC_USD_SYMBOL = "tBTCUSD";
 
-    List<BitfinexTicker> tickers = marketDataServiceRaw.getTickersRaw(Arrays.asList("tBTCUSD"));
+  @Test
+  public void testGetTickersRaw() throws IOException {
+
+    List<BitfinexTicker> tickers = marketDataServiceRaw.getTickersRaw(Arrays.asList(BTC_USD_SYMBOL));
 
     assertThat(tickers).isNotNull();
-    assertThat(tickers.get(0).getSymbol()).isEqualTo("tBTCUSD");
+    assertThat(tickers.get(0).getSymbol()).isEqualTo(BTC_USD_SYMBOL);
   }
 
   @Test
-  public void testGetTickerRaw() throws Exception {
+  public void testGetTickerRaw() throws IOException {
 
-    BitfinexSingleTicker ticker = marketDataServiceRaw.getTickerRaw("tBTCUSD");
+    BitfinexSingleTicker ticker = marketDataServiceRaw.getTickerRaw(BTC_USD_SYMBOL);
 
     assertThat(ticker).isNotNull();
     assertThat(ticker.getAsk()).isGreaterThan(new BigDecimal(100));
   }
 
   @Test
-  public void testGetBooksRaw() throws Exception {
+  public void testGetBooksRaw() throws IOException {
 
-    List<BitfinexBook> books = marketDataServiceRaw.getBooksRaw("tBTCUSD", Optional.empty());
+    List<BitfinexBook> books = marketDataServiceRaw.getBooksRaw(BTC_USD_SYMBOL, Optional.empty());
 
     assertThat(books).isNotNull();
     assertThat(books.size()).isGreaterThan(1);
+  }
+
+  @Test
+  public void testGetTradesRaw() throws IOException {
+
+    List<BitfinexTrade> trades = marketDataServiceRaw.getTradesRaw(BTC_USD_SYMBOL);
+
+    assertThat(trades).isNotNull();
+    assertThat(trades.size()).isGreaterThan(1);
+    System.out.println(trades);
   }
 
 }

@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
+import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,7 +34,6 @@ public interface Bitfinex {
 
   @GET
   @Path("trades/{symbol}/hist")
-  void getTrades(@PathParam("symbol") String symbol) throws IOException;
-
+  List<BitfinexTrade> getTrades(@PathParam("symbol") String symbol) throws IOException;
 
 }
