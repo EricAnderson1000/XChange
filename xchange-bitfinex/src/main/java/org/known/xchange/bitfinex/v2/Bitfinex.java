@@ -11,10 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
+import org.known.xchange.bitfinex.v2.dto.marketdata.*;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,5 +32,14 @@ public interface Bitfinex {
   @GET
   @Path("trades/{symbol}/hist")
   List<BitfinexTrade> getTrades(@PathParam("symbol") String symbol) throws IOException;
+
+  @GET
+  @Path("stats1/{key}:{size}:{symbol}:long/last")
+  BitfinexStat getStat(@PathParam("key") String key, @PathParam("size") String size, @PathParam("symbol") String symbol) throws IOException;
+
+
+  @GET
+  @Path("candles/trade:{timeframe}:{symbol}/{section}")
+  BitfinexCandle getCandle(@PathParam("timeframe") String timeframe, @PathParam("symbol") String symbol, @PathParam("section") String section) throws IOException;
 
 }

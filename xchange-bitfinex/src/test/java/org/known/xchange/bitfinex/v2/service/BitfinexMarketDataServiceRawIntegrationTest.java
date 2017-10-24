@@ -12,10 +12,7 @@ import org.junit.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.known.xchange.bitfinex.v2.BitfinexExchange;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexBook;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexSingleTicker;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
-import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTrade;
+import org.known.xchange.bitfinex.v2.dto.marketdata.*;
 
 public class BitfinexMarketDataServiceRawIntegrationTest {
 
@@ -60,6 +57,24 @@ public class BitfinexMarketDataServiceRawIntegrationTest {
     assertThat(trades).isNotNull();
     assertThat(trades.size()).isGreaterThan(1);
     System.out.println(trades);
+  }
+
+  @Test
+  public void testGetStatRaw() throws IOException {
+
+    BitfinexStat bitfinexStat = marketDataServiceRaw.getStatRaw("pos.size", "1m", BTC_USD_SYMBOL);
+
+    assertThat(bitfinexStat).isNotNull();
+    assertThat(bitfinexStat.getValue()).isGreaterThan(BigDecimal.ONE);
+  }
+
+  @Test
+  public void testGetCandleRaw() throws IOException {
+
+    BitfinexCandle bitfinexCandle = marketDataServiceRaw.getCandleRaw("1m", BTC_USD_SYMBOL, "last");
+
+    assertThat(bitfinexCandle).isNotNull();
+    assertThat(bitfinexCandle.getOpen()).isGreaterThan(BigDecimal.ONE);
   }
 
 }
