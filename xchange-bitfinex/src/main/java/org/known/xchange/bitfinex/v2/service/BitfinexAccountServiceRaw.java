@@ -1,0 +1,22 @@
+package org.known.xchange.bitfinex.v2.service;
+
+import org.knowm.xchange.Exchange;
+import org.known.xchange.bitfinex.v2.dto.EmptyBody;
+import org.known.xchange.bitfinex.v2.dto.account.Wallet;
+
+import java.io.IOException;
+import java.util.List;
+
+public class BitfinexAccountServiceRaw extends BitfinexBaseService {
+
+  public BitfinexAccountServiceRaw(Exchange exchange) {
+
+    super(exchange);
+  }
+
+  public List<Wallet> getWallets() throws IOException {
+
+    return bitfinex.getWallets(apiKey, String.valueOf(exchange.getNonceFactory().createValue()), signatureCreator);
+  }
+
+}
