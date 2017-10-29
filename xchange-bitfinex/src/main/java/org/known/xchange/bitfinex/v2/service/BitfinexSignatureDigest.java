@@ -46,8 +46,6 @@ public class BitfinexSignatureDigest extends BaseParamsDigest {
     String signature = "/api" + restInvocation.getPath() +
         restInvocation.getHttpHeadersFromParams().get("bfx-nonce") + body;
 
-    System.out.println("About to sign: " + signature);
-
     return digestParamsDirect(signature);
   }
 
