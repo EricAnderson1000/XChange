@@ -7,6 +7,7 @@ import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeSpecification;
 import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.utils.nonce.AtomicLongIncrementalTime2013NonceFactory;
+import org.knowm.xchange.utils.nonce.CurrentTimeNonceFactory;
 import org.known.xchange.bitfinex.v2.service.BitfinexAccountService;
 import org.known.xchange.bitfinex.v2.service.BitfinexMarketDataService;
 
@@ -14,7 +15,7 @@ import si.mazi.rescu.SynchronizedValueFactory;
 
 public class BitfinexExchange extends BaseExchange implements Exchange {
 
-  private SynchronizedValueFactory<Long> nonceFactory = new AtomicLongIncrementalTime2013NonceFactory();
+  private SynchronizedValueFactory<Long> nonceFactory = new CurrentTimeNonceFactory();
 
   @Override
   protected void initServices() {

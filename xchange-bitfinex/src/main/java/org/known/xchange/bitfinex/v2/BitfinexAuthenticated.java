@@ -1,6 +1,7 @@
 package org.known.xchange.bitfinex.v2;
 
 import org.known.xchange.bitfinex.v2.dto.account.Wallet;
+import org.known.xchange.bitfinex.v2.dto.account.WalletRequest;
 import org.known.xchange.bitfinex.v2.dto.marketdata.BitfinexTicker;
 import si.mazi.rescu.ParamsDigest;
 
@@ -16,7 +17,9 @@ public interface BitfinexAuthenticated extends Bitfinex {
 
   @POST
   @Path("/auth/r/wallets")
-  List<Wallet> getWallets(@HeaderParam("bfx-apikey") String apiKey, @HeaderParam("bfx-nonce") String nonce, @HeaderParam("bfx-signature") ParamsDigest signature) throws IOException;
+  List<Wallet> getWallets(
+      @HeaderParam("bfx-apikey") String apiKey, @HeaderParam("bfx-nonce") String nonce,
+      @HeaderParam("bfx-signature") ParamsDigest signature, WalletRequest walletRequest) throws IOException;
 
 
 }

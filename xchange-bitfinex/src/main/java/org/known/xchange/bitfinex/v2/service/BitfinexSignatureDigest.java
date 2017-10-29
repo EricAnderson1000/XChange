@@ -41,23 +41,25 @@ public class BitfinexSignatureDigest extends BaseParamsDigest {
 
     String body = (restInvocation.getRequestBody() != null) ?
         restInvocation.getRequestBody()
-        : "";
+        : "{}";
 
-    String signature = restInvocation.getPath() +
+    String signature = "/api" + restInvocation.getPath() +
         restInvocation.getHttpHeadersFromParams().get("bfx-nonce") + body;
 
-    LOGGER.debug("Signature Raw : " + signature);
-    System.out.println( "Signature Raw : " + signature);
+    System.out.println("About to sign: " + signature);
+
+    return digestParamsDirect(signature);
+  }
+
+  public String digestParamsDirect(String value) {
 
     Mac mac = getMac();
+    mac.update(value.getBytes());
 
-    mac.update(signature.getBytes());
-
-//    return String.format("%096x", new BigInteger(1, mac.doFinal()));
-
-        return new String(mac.doFinal());
-
+    return String.format("%096x", new BigInteger(1, mac.doFinal()));
   }
+
+
 
 
 //  @Override
