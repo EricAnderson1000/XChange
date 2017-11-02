@@ -51,4 +51,6 @@ public class BitfinexAccountService extends BitfinexAccountServiceRaw implements
   public List<FundingRecord> getFundingHistory(TradeHistoryParams params) throws ExchangeException, NotAvailableFromExchangeException, NotYetImplementedForExchangeException, IOException {
     return null;
   }
+
+
 }

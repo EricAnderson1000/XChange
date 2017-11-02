@@ -18,7 +18,6 @@ public interface BitfinexAuthenticated extends Bitfinex {
 
   /**
    * Get account wallets
-   *
    * https://docs.bitfinex.com/v2/reference#rest-auth-wallets
    */
   @POST
@@ -28,14 +27,23 @@ public interface BitfinexAuthenticated extends Bitfinex {
       @HeaderParam("bfx-signature") ParamsDigest signature, EmptyRequest walletRequest) throws IOException;
 
   /**
-   *
    * Get active orders
-   *
    * https://docs.bitfinex.com/v2/reference#rest-auth-orders
    */
   @POST
   @Path("auth/r/orders/${symbol}")
   List<Order> getOrders(@HeaderParam("bfx-apikey") String apiKey, @HeaderParam("bfx-nonce") String nonce,
       @HeaderParam("bfx-signature") ParamsDigest signature, @PathParam("symbol") String symbol, EmptyRequest emptyRequest) throws IOException;
+
+  /**
+   * https://docs.bitfinex.com/v2/reference#rest-auth-calc-bal-avail
+   */
+  @POST
+  @Path("auth/calc/order/avail")
+  void getBalance(@HeaderParam("bfx-apikey") String apiKey, @HeaderParam("bfx-nonce") String nonce,
+      @HeaderParam("bfx-signature") ParamsDigest signature) throws IOException;
+
+
+
 
 }
