@@ -27,16 +27,19 @@ public class HitbtcAccountService extends HitbtcAccountServiceRaw implements Acc
 
   @Override
   public AccountInfo getAccountInfo() throws IOException {
+
     return new AccountInfo(HitbtcAdapters.adaptWallet("Main", getMainBalance()), HitbtcAdapters.adaptWallet("Trading", getTradingBalance()));
   }
 
   @Override
   public String withdrawFunds(Currency currency, BigDecimal amount, String address) throws IOException {
+
     return withdrawFundsRaw(currency, amount, address);
   }
 
   @Override
   public String withdrawFunds(WithdrawFundsParams params) throws ExchangeException, NotAvailableFromExchangeException, NotYetImplementedForExchangeException, IOException {
+
     if (params instanceof DefaultWithdrawFundsParams) {
       DefaultWithdrawFundsParams defaultParams = (DefaultWithdrawFundsParams) params;
       return withdrawFunds(defaultParams.currency, defaultParams.amount, defaultParams.address);
@@ -52,6 +55,7 @@ public class HitbtcAccountService extends HitbtcAccountServiceRaw implements Acc
 
   @Override
   public TradeHistoryParams createFundingHistoryParams() {
+
     throw new NotAvailableFromExchangeException();
   }
 
