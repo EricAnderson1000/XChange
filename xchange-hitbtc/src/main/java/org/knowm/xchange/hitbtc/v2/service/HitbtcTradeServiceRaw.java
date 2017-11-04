@@ -1,7 +1,9 @@
 package org.knowm.xchange.hitbtc.v2.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.dto.trade.LimitOrder;
@@ -38,6 +40,10 @@ public class HitbtcTradeServiceRaw extends HitbtcBaseService {
   }
 
 
+  public HitbtcOrder updateMarketOrderRaw(String clientOrderId, BigDecimal quantity, String requestClientId, Optional<BigDecimal> price) throws IOException {
+
+    return hitbtc.updateHitbtcOrder(clientOrderId, quantity, requestClientId, price.orElse(null));
+  }
 
   public HitbtcOrder cancelOrderRaw(String clientOrderId) throws IOException {
     return hitbtc.cancelSingleOrder(clientOrderId);
